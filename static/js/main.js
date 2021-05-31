@@ -1,24 +1,3 @@
-/*
- * pure-knob
- *
- * Canvas-based JavaScript UI element implementing touch,
- * keyboard, mouse and scroll wheel support.
- *
- * Copyright 2018 - 2021 Andre Plötze
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use strict";
 
 (function (root, factory) {
@@ -1140,71 +1119,6 @@
 	return new PureKnob();
 }));
 
-
-
-
-
-
-//
-//
-//
-// function demoKnob() {
-// 				// Create knob element, 300 x 300 px in size.
-// 				const knob = pureknob.createKnob(400, 400);
-//
-// 				// Set properties.
-// 				knob.setProperty('angleStart', -0.75 * Math.PI);
-// 				knob.setProperty('angleEnd', 0.75 * Math.PI);
-// 				knob.setProperty('colorFG', '#88ff88');
-// 				knob.setProperty('trackWidth', 0.4);
-// 				knob.setProperty('valMin', 0);
-// 				knob.setProperty('valMax', 50);
-//
-// 				// Set initial value.
-// 				knob.setValue(0);
-//
-// 				/*
-// 				 * Event listener.
-// 				 *
-// 				 * Parameter 'knob' is the knob object which was
-// 				 * actuated. Allows you to associate data with
-// 				 * it to discern which of your knobs was actuated.
-// 				 *
-// 				 * Parameter 'value' is the value which was set
-// 				 * by the user.
-// 				 */
-// 				const listener = function(knob, value) {
-// 					console.log(value);
-// 				};
-//
-// 				knob.addListener(listener);
-//
-// 				// Create element node.
-// 				const node = knob.node();
-//
-// 				// Add it to the DOM.
-// 				const elem = document.getElementById('some_element');
-// 				elem.appendChild(node);
-// 				return knob;
-// 			}
-//
-// 			/*
-// 			 * Demo code for bar graph element.
-// 			 */
-//
-//
-// 			/*
-// 			 * This is executed after the document finished loading.
-// 			 */
-// 			function ready() {
-// 				demoKnob();
-// 			}
-//
-// 			document.addEventListener('DOMContentLoaded', ready, false);
-
-
-
-
 $(document).ready(function(){
 
 	const on_btn = document.getElementById('on');
@@ -1234,6 +1148,9 @@ $(document).ready(function(){
 			return
 		}
 		if(this.style.backgroundColor !== 'red') {
+			$.get("/dir/1", function(data, status){
+
+            });
 			this.style.backgroundColor = 'red';
 			bwd_btn.style.backgroundColor = 'green';
 		}
@@ -1245,6 +1162,9 @@ $(document).ready(function(){
 			return
 		}
 		if(this.style.backgroundColor !== 'red') {
+			$.get("/dir/0", function(data, status){
+
+            });
 			this.style.backgroundColor = 'red';
 			fwd_btn.style.backgroundColor = 'green';
 		}
@@ -1276,6 +1196,9 @@ $(document).ready(function(){
 				 * by the user.
 				 */
 				const listener = function(knob, value) {
+					$.get(`/${parseInt(value) * 10}`, function (data, status) {
+
+			        });
 					console.log(value);
 				};
 
@@ -1299,7 +1222,8 @@ $(document).ready(function(){
 				let connected = parseInt(data['connected']) === 1;
 				let speed = parseInt(data['speed']) / 10;
 				let is_on = data['on'] === '1';
-				let direction = data['direction'] === '1' ? 'fwd' : 'rwd';
+				let direction = data['direction'] === '1' ? 'fwd' : 'bwd';
+
 
 				if(!connected) {
 					main_title.textContent = "Device not connected";
@@ -1333,6 +1257,6 @@ $(document).ready(function(){
 
 
 
-    }, 1000)
+    }, 2000)
 });
 
